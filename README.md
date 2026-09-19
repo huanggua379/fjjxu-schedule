@@ -86,6 +86,8 @@ flutter build apk --release
 
 装到手机：把这个 apk 传到手机点开安装；或连电脑执行 `adb install -r build/app/outputs/flutter-apk/app-release.apk`。
 
+可以直接下载课本-v1.0.0-release这个apk，在手机本地文件管理安装使用。
+
 首次打开：输学号密码登录（学校统一身份认证账号，同「今日校园」）→ 给通知权限 → **到「设置 → 开学第一周」校准本学期开学周一日期** → 下拉/自动同步课表和成绩。
 
 ---
