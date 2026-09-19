@@ -81,7 +81,12 @@ class ScheduleRemote {
     // 置为“未排入”(weekday=0/startSection=0)，由课表页专门区域展示，
     // 避免整门课从课表里凭空消失。提醒/今日/周网格都会自动跳过它们。
     final courseId = '${kchId}_$jxbId';
-    final entryId = '${courseId}_${xqj}_${raw['jc'] ?? ''}';
+    // entryId 必须包含周次(zcd)与教室(cdmc)：正方会把同一门课“同星期同节次、
+    // 但不同周次/不同实验室”的轮换排课拆成多行（如大学物理实验周二7-8节分5间实验室）。
+    // 若只用 courseId+星期+节次，多行会生成相同主键而在 SQLite 覆盖写入时互相顶掉，
+    // 导致该课在大部分周次里凭空消失。加上 zcd+cdmc 保证每行唯一且跨同步稳定。
+    final entryId =
+        '${courseId}_${xqj}_${raw['jc'] ?? ''}_${raw['zcd'] ?? ''}_${raw['cdmc'] ?? ''}';
     return ScheduleEntry(
       entryId: entryId,
       courseId: courseId,

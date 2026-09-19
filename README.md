@@ -148,7 +148,7 @@ Network (Dio + CookieJar) / Crypto (AES)
 - **无后端**：所有请求由 App 直接发往学校教务系统。不引入自建服务器，避免无谓的运维、数据中转与隐私风险（符合「不为了显得高级而加后端」的要求）。
 - **sqflite 而非 Drift、Riverpod 手写而非 codegen**：减少构建期代码生成环节，最大化构建稳定性与可读性。
 - **服务器数据与用户设置分表**：同步只覆盖 `schedule_entry`/`grade`，隐藏与提醒设置存独立表，**保证隐藏状态在重新同步后不丢失**。
-- **稳定 ID 去重**：`courseId=kch+jxb`、`entryId=courseId+星期+节次`、`gradeId=row_id`，用于隐藏、提醒、新成绩检测的去重。
+- **稳定 ID 去重**：`courseId=kch+jxb`、`entryId=courseId+星期+节次+周次+教室`、`gradeId=row_id`，用于隐藏、提醒、新成绩检测的去重。entryId 含周次与教室，是因为正方会把同一门课「同星期同节次、不同周次/不同实验室」的轮换排课拆成多行，只用星期+节次会主键冲突、覆盖丢课。
 
 ---
 
